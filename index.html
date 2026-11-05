@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b0b10">
+<meta name="theme-color" content="#0e1013">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,54 +14,85 @@
 <meta name="apple-mobile-web-app-title" content="Adonis">
 <title>Adonis</title>
 <style>
-:root{--bg:#0b0b10;--card:#16161f;--card2:#1e1e2a;--gold:#d4af37;--gold2:#f3d97a;--txt:#f2f0e8;--mut:#8d8b99;--ok:#4cc38a;--bad:#e5645a}
+:root{--bg:#0e1013;--p1:#161a1f;--p2:#1e2329;--p3:#272d34;--line:#2a3037;--bronze:#c9955a;--bronze2:#e8c08a;--verd:#7cb5a6;--txt:#ece8df;--mut:#8b9199;--bad:#d4766a;
+--gold:var(--bronze);--gold2:var(--bronze2);--ok:var(--verd);--card:var(--p1);--card2:var(--p2);
+--disp:"Big Shoulders Display","Barlow Condensed","Arial Narrow",system-ui,sans-serif;--body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-body{padding-top:env(safe-area-inset-top);padding-bottom:calc(76px + env(safe-area-inset-bottom))}
-#main{padding:16px;max-width:640px;margin:0 auto}
-h1{font-size:26px;margin:4px 0 2px;color:var(--gold2);letter-spacing:.5px}
-h2{font-size:18px;margin:18px 0 8px;color:var(--gold)}
-.sub{color:var(--mut);font-size:14px;margin-bottom:12px}
-.card{background:var(--card);border:1px solid #26263a;border-radius:16px;padding:14px;margin:10px 0}
-.ex-name{font-weight:600;font-size:16px}
-.ex-meta{color:var(--mut);font-size:13px;margin:2px 0 10px}
-.sets{display:flex;gap:8px;flex-wrap:wrap}
-.si{width:58px;height:46px;border-radius:12px;border:1.5px solid #34344a;background:var(--card2);color:var(--txt);text-align:center;font-size:17px}
-.si.done{border-color:var(--gold);background:#2a2412;color:var(--gold2)}
-.kgi{width:70px;height:38px;border-radius:10px;border:1px solid #34344a;background:var(--card2);color:var(--txt);text-align:center;font-size:15px}
-.mini{width:54px;height:38px;border-radius:10px;border:1px solid #34344a;background:var(--card2);color:var(--txt);text-align:center;font-size:15px}
-.mini.w{width:96px}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 8px}
+html,body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--body);font-size:16px;line-height:1.4;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(120% 55% at 0% 0%,rgba(201,149,90,.15),transparent 60%),radial-gradient(90% 45% at 100% 100%,rgba(124,181,166,.08),transparent 60%)}
+body{padding-top:env(safe-area-inset-top);padding-bottom:calc(108px + env(safe-area-inset-bottom))}
+#main{padding:22px 18px;max-width:560px;margin:0 auto}
+h1{font-family:var(--disp);font-weight:800;font-size:46px;line-height:.95;letter-spacing:.01em;margin:6px 0 6px}
+h1.hero{font-size:76px}
+h2{font-size:15px;font-weight:600;margin:28px 0 10px;color:var(--mut)}
+.sub{color:var(--mut);font-size:15px;margin:0 0 18px;max-width:46ch}
+.date{color:var(--bronze2);font-size:14px;font-weight:600}
+.num{font-family:var(--disp);font-weight:700;font-size:22px;font-variant-numeric:tabular-nums}
+.big{font-family:var(--disp);font-weight:800;font-size:76px;line-height:1;font-variant-numeric:tabular-nums}
+.big small{font-size:26px;color:var(--mut);margin-left:6px;font-weight:700}
+.card{background:linear-gradient(180deg,var(--p2),var(--p1));border-radius:22px;padding:16px;margin:12px 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 12px 30px -14px rgba(0,0,0,.8)}
+.ex-name{font-weight:650;font-size:17px}
+.ex-meta{color:var(--mut);font-size:13.5px;margin:3px 0 14px}
+.sets{display:flex;gap:10px;flex-wrap:wrap}
+input[type=number]{-moz-appearance:textfield;appearance:textfield}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.si{width:54px;height:54px;border-radius:50%;border:1.5px solid var(--p3);background:var(--p1);color:var(--txt);text-align:center;font-family:var(--disp);font-weight:700;font-size:25px;padding:0;outline:none;transition:border-color .15s,background .15s}
+.si::placeholder{color:#4b535c;font-family:var(--body);font-size:12px;font-weight:500}
+.si:focus{border-color:var(--bronze)}
+.si.done{border-color:transparent;background:linear-gradient(145deg,var(--bronze2),var(--bronze));color:#1b1209}
+.si.pop{animation:pop .3s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{0%{transform:scale(.78)}100%{transform:scale(1)}}
+.kgi{width:76px;height:36px;border-radius:18px;border:1px solid var(--p3);background:var(--p1);color:var(--txt);text-align:center;font-size:15px;font-weight:600;outline:none}
+.kgi:focus,.mini:focus{border-color:var(--bronze)}
+.mini{width:54px;height:40px;border-radius:12px;border:1px solid var(--p3);background:var(--p1);color:var(--txt);text-align:center;font-size:15px;outline:none}
+.mini.w{width:100px}
+.seg{display:flex;gap:4px;margin:8px 0 4px}
+.seg i{flex:1;height:8px;border-radius:4px;background:var(--p3);transition:background .25s}
+.seg i.on{background:linear-gradient(90deg,#7cb5a6,#a3d5c8)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
 .chips.wrap{flex-wrap:wrap;overflow:visible}
-.chip{padding:8px 14px;border-radius:20px;background:var(--card2);color:var(--mut);border:1px solid #2c2c40;font-size:14px;white-space:nowrap}
-.chip.on{background:var(--gold);color:#1a1405;border-color:var(--gold);font-weight:600}
-.bar{height:12px;background:#24243a;border-radius:8px;overflow:hidden;margin:6px 0}
-.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));width:0}
+.chip{padding:10px 16px;border-radius:14px;background:var(--p1);color:var(--mut);border:1px solid var(--line);font-size:14.5px;font-weight:600;white-space:nowrap;transition:background .15s,color .15s}
+.chip.on{background:var(--txt);color:#15110b;border-color:var(--txt)}
+.bar{height:8px;background:var(--p3);border-radius:4px;overflow:hidden;margin:8px 0}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--bronze),var(--bronze2));border-radius:4px}
 .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
-button{font:inherit}
-.btn{background:var(--gold);color:#1a1405;border:0;border-radius:12px;padding:12px 16px;font-weight:600}
-.btn.sec{background:var(--card2);color:var(--txt);border:1px solid #34344a}
-.btn.sm{padding:8px 12px;font-size:13px;border-radius:10px}
+button{font:inherit;cursor:pointer}
+.btn{background:linear-gradient(180deg,var(--bronze2),var(--bronze));color:#1b1209;border:0;border-radius:14px;padding:13px 18px;font-weight:700;box-shadow:0 8px 20px -8px rgba(201,149,90,.65),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn:active{transform:scale(.98)}
+.btn.sec{background:transparent;color:var(--txt);border:1px solid var(--line);box-shadow:none}
+.btn.sm{padding:9px 13px;font-size:13.5px;border-radius:12px}
 .btn.full{width:100%;margin-top:14px}
-input.t,select.t{width:100%;background:var(--card2);border:1px solid #34344a;border-radius:12px;color:var(--txt);padding:12px;font-size:16px}
-label.f{display:block;color:var(--mut);font-size:13px;margin:12px 0 4px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.banner{background:#2a2412;border:1px solid var(--gold);border-radius:14px;padding:12px;margin:8px 0;font-size:14px}
-details.card summary{font-weight:600;color:var(--gold2);cursor:pointer}
-ul{padding-left:20px;margin:8px 0;line-height:1.5}
-li{margin:3px 0}
-.mut{color:var(--mut);font-size:13px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--bronze2);outline-offset:2px}
+input.t,select.t{width:100%;background:var(--p1);border:1px solid var(--line);border-radius:14px;color:var(--txt);padding:13px 14px;font-size:16px;font-family:var(--body);outline:none}
+input.t:focus,select.t:focus{border-color:var(--bronze)}
+label.f{display:block;color:var(--mut);font-size:13px;font-weight:600;margin:16px 0 6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.banner{background:rgba(201,149,90,.1);border-left:3px solid var(--bronze);border-radius:6px 14px 14px 6px;padding:12px 14px;margin:10px 0;font-size:14px}
+ul{padding-left:20px;margin:8px 0;line-height:1.55}
+li{margin:4px 0}
+.mut{color:var(--mut);font-size:13.5px}
 .del{background:none;border:0;color:var(--bad);font-size:18px;padding:4px 8px}
-.exrow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:10px 0;padding-bottom:10px;border-bottom:1px solid #26263a}
+.xr{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-top:1px solid var(--line);font-size:15px}
+.xr span:last-child{white-space:nowrap}
+.exrow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:10px 0;padding-bottom:12px;border-bottom:1px solid var(--line)}
 .exrow .nm{flex:1 1 100%;font-size:15px}
-nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:#101018;border-top:1px solid #26263a;padding-bottom:env(safe-area-inset-bottom);z-index:5}
-nav button{flex:1;background:none;border:0;color:var(--mut);padding:10px 0 8px;font-size:11px}
-nav button span{display:block;font-size:20px;margin-bottom:2px}
-nav button.on{color:var(--gold2)}
-#timer{position:fixed;left:12px;right:12px;bottom:calc(66px + env(safe-area-inset-bottom));background:#1c1c28;border:1px solid var(--gold);border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:8px;z-index:6;box-shadow:0 6px 20px #000a}
-#timer b{font-size:20px;color:var(--gold2);min-width:56px}
+.ring{position:relative;width:184px;height:184px;margin:4px auto 6px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .tr{stroke:var(--p3)}
+.ring circle:last-of-type{transition:stroke-dashoffset .6s ease}
+.rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.rc b{font-family:var(--disp);font-weight:800;font-size:58px;line-height:1;font-variant-numeric:tabular-nums}
+.rc span{color:var(--mut);font-size:13px}
+nav{position:fixed;left:14px;right:14px;max-width:532px;margin:0 auto;bottom:calc(12px + env(safe-area-inset-bottom));display:flex;background:rgba(22,26,31,.78);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.07);border-radius:26px;padding:6px;z-index:5;box-shadow:0 18px 40px -10px rgba(0,0,0,.85)}
+nav button{flex:1;background:none;border:0;color:var(--mut);padding:9px 0 7px;font-size:11px;font-weight:600;border-radius:20px;display:flex;flex-direction:column;align-items:center;gap:3px;transition:color .15s,background .15s}
+nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--bronze2);background:rgba(201,149,90,.13)}
+#timer{position:fixed;left:14px;right:14px;max-width:532px;margin:0 auto;bottom:calc(86px + env(safe-area-inset-bottom));background:rgba(30,35,41,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:8px 8px 8px 16px;display:flex;align-items:center;gap:8px;z-index:6;box-shadow:0 14px 30px -10px rgba(0,0,0,.8)}
+#timer b{font-family:var(--disp);font-size:32px;font-weight:700;line-height:1;color:var(--bronze2);min-width:66px;font-variant-numeric:tabular-nums}
 #timer .grow{flex:1}
-svg text{fill:var(--mut);font-size:10px}
+svg text{fill:var(--mut);font-size:10px;font-family:var(--body)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -142,7 +175,8 @@ function T(){const c=calc(S.profile);return {c,kcal:S.manual?S.manual.kcal:c.kca
 
 // ---------- Navigation / Render ----------
 const TABS=[['heute','🏋️','Heute'],['plan','📋','Plan'],['essen','🍽️','Essen'],['gewicht','📈','Gewicht'],['ich','👤','Ich']];
-function nav(){const n=$('#nav');n.style.display=(!S.profile||editing)?'none':'flex';n.innerHTML=TABS.map(t=>`<button data-tab="${t[0]}" class="${tab===t[0]?'on':''}"><span>${t[1]}</span>${t[2]}</button>`).join('')}
+const IC={heute:'<svg viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg>',plan:'<svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>',essen:'<svg viewBox="0 0 24 24"><path d="M3.5 11h17a8.5 8.5 0 0 1-17 0zM8 7.5C8 5.5 9.5 4.5 11 4M13 7.5c0-1.5 1-2.5 2.5-3"/></svg>',gewicht:'<svg viewBox="0 0 24 24"><path d="M3.5 17.5l5.5-6 4 3.5 7.5-9M15.5 6h5v5"/></svg>',ich:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c0-3.8 3.4-6 7.5-6s7.5 2.2 7.5 6"/></svg>'};
+function nav(){const n=$('#nav');n.style.display=(!S.profile||editing)?'none':'flex';n.innerHTML=TABS.map(t=>`<button data-tab="${t[0]}" class="${tab===t[0]?'on':''}">${IC[t[0]]}${t[2]}</button>`).join('')}
 function render(keep){const y=window.scrollY||0;
  if(!S.profile&&!D)D=newD();
  nav();const form=!S.profile||editing;
@@ -159,7 +193,7 @@ function chipsH(items,on,attr){return `<div class="chips wrap">${items.map(([v,l
 function prevHTML(){if(!validP(D))return '<span class="mut">Fülle Alter, Größe, Gewicht und mindestens einen Trainingstag aus, dann siehst du hier deine Zahlen.</span>';
  const c=calc(D);return `<b>${c.kcal} kcal</b> pro Tag · <b>${c.prot} g</b> Protein<div class="mut" style="margin-top:4px">Grundumsatz ${Math.round(c.bmr)} · Gesamtumsatz ${Math.round(c.tdee)} kcal · BMI ${c.bmi.toFixed(1)} · ${D.days.length} Trainingstage</div>${c.warn.map(x=>`<div class="banner" style="margin-top:8px">${esc(x)}</div>`).join('')}`}
 function formView(){const first=!S.profile;
- return `<h1>${first?'Willkommen 👋':'Profil'}</h1><div class="sub">${first?'Gib deine Werte ein. Kalorien, Protein und Trainingsplan werden für dich berechnet.':'Ändere deine Werte, alles wird neu berechnet.'}</div>
+ return `${first?'<div class="date">Willkommen bei</div><h1 class="hero">Adonis</h1>':'<h1>Profil</h1>'}<div class="sub">${first?'Gib deine Werte ein. Kalorien, Protein und Trainingsplan werden für dich berechnet.':'Ändere deine Werte, alles wird neu berechnet.'}</div>
  <div class="card"><label class="f" style="margin-top:0">Name (optional)</label><input class="t" data-f="name" value="${esc(D.name)}" placeholder="Dein Name">
  <div class="grid2"><div><label class="f">Alter</label><input class="t" type="number" inputmode="numeric" data-f="age" value="${D.age}"></div><div><label class="f">Größe (cm)</label><input class="t" type="number" inputmode="numeric" data-f="height" value="${D.height}"></div></div>
  <label class="f">Gewicht (kg)</label><input class="t" type="number" step="0.1" inputmode="decimal" data-f="weight" value="${D.weight}">
@@ -186,19 +220,19 @@ function saveProfile(){
 // ---------- Heute ----------
 function heute(){
  const pl=S.plan||[];if(!pl.length)return '<h1>Kein Plan</h1><div class="card">Es gibt noch keinen Trainingsplan. Erzeuge einen im Tab Plan.</div>';
- if(sel>=pl.length)sel=0;const p=pl[sel],log=(S.log[dk()]=S.log[dk()]||{}),tp=pl.find(s=>s.day===today);
- let h=`<h1>${esc(p.t)}</h1><div class="sub">${esc(p.sub)}</div>`;
+ if(sel>=pl.length)sel=0;const p=pl[sel],log=(S.log[dk()]=S.log[dk()]||{}),tp=pl.find(s=>s.day===today),ds=new Date().toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'});
+ let h=`<div class="date">${ds}</div><h1>${esc(p.t)}</h1><div class="sub">${esc(p.sub)}</div>`;
  h+=`<div class="chips">${pl.map((s,i)=>`<button class="chip ${i===sel?'on':''}" data-sess="${i}">${WD[s.day]}${s.day===today?' •':''}</button>`).join('')}</div>`;
  if(!tp)h+=`<div class="banner">Heute ist Ruhetag 😴 Spaziergang, dehnen, gut essen und früh schlafen. Muskeln wachsen in der Erholung.</div>`;
  else if(p!==tp)h+=`<div class="banner">Das ist nicht der heutige Plan (heute: ${esc(tp.t)}).</div>`;
- h+=`<div class="card"><div class="row"><span>Fortschritt</span><b id="prog"></b></div><div class="bar"><i id="pbar"></i></div></div>`;
+ h+=`<div class="row" style="margin-top:4px"><span class="mut">Fortschritt</span><b class="num" id="prog"></b></div><div class="seg" id="seg"></div>`;
  p.ex.forEach(e=>{const v=log[e.id]||[],l=lastVals(e.id);
   h+=`<div class="card"><div class="row"><div class="ex-name">${esc(e.n)}</div>${e.w?`<input class="kgi" type="text" inputmode="decimal" data-wt="${esc(e.id)}" value="${esc(S.wt[e.id]||'')}" placeholder="kg">`:''}</div><div class="ex-meta">${e.s} Sätze × ${esc(e.r)}${l.length?' · letztes Mal: '+l.filter(x=>x).join('/'):''}</div><div class="sets">`;
   for(let s=0;s<e.s;s++)h+=`<input class="si ${v[s]>0?'done':''}" type="number" inputmode="numeric" data-id="${esc(e.id)}" data-s="${s}" value="${v[s]||''}" placeholder="${l[s]||'Wdh'}">`;
   h+=`</div></div>`});
- return h+`<div class="card mut">Trag deine Wiederholungen pro Satz ein. Schaffst du überall die obere Zahl, wird es Zeit für mehr Schwierigkeit: mehr Gewicht, langsameres Tempo, einarmige Varianten oder kürzere Pausen. Ziel: 1-2 Wiederholungen vor dem Muskelversagen.</div>`}
-function prog(){const p=(S.plan||[])[sel];if(!p)return;const log=S.log[dk()]||{};let d=0,t=0;p.ex.forEach(e=>{t+=e.s;(log[e.id]||[]).forEach((x,i)=>{if(x>0&&i<e.s)d++})});
- const a=$('#prog');if(a){a.textContent=d+' / '+t+' Sätze';$('#pbar').style.width=(t?d/t*100:0)+'%'}}
+ return h+`<div class="card mut">Trag deine Wiederholungen pro Satz ein. Schaffst du überall die obere Zahl, wird es Zeit für mehr Schwierigkeit: mehr Gewicht, langsameres Tempo, einarmige Varianten oder kürzere Pausen. Ziel: 1-2 Wiederholungen vor dem Muskelversagen.</div><div style="height:76px"></div>`}
+function prog(){const p=(S.plan||[])[sel];if(!p)return;const log=S.log[dk()]||{};let d=0,t=0,sg='';p.ex.forEach(e=>{const v=log[e.id]||[];for(let i=0;i<e.s;i++){t++;const on=v[i]>0;if(on)d++;sg+=`<i class="${on?'on':''}"></i>`}});
+ const a=$('#prog');if(a){a.textContent=d+' / '+t+' Sätze';$('#seg').innerHTML=sg}}
 
 // ---------- Plan ----------
 function optsFor(g,cur){const eq=S.profile.eq;return DB.filter(e=>e[2]===g&&(hasEq(e[3],eq)||e[0]===cur)).map(e=>`<option value="${e[0]}" ${e[0]===cur?'selected':''}>${esc(e[1])}</option>`).join('')}
@@ -207,7 +241,7 @@ function plan(){const pl=S.plan||[];
  let h=`<div class="row"><h1>Trainingsplan</h1><button class="btn sm ${pedit?'':'sec'}" data-act="pedit">${pedit?'Fertig':'Bearbeiten'}</button></div><div class="sub">${pl.length} Trainingstage pro Woche · ${esc(lab(LVS,S.profile.level))}</div>`;
  pl.forEach((s,si)=>{
   h+=`<div class="card"><div class="row"><b style="color:var(--gold2)">${pedit?`<select class="t" style="width:auto;padding:6px" data-sday="${si}">${WORDER.map(d=>`<option value="${d}" ${d===s.day?'selected':''}>${WD[d]}</option>`).join('')}</select> `:WD[s.day]+' – '}${esc(s.t)}</b></div><div class="mut">${esc(s.sub)}</div>`;
-  if(!pedit)h+=`<ul>${s.ex.map(e=>`<li>${esc(e.n)} <span class="mut">${e.s} × ${esc(e.r)}</span></li>`).join('')}</ul>`;
+  if(!pedit)h+=`<div style="margin-top:8px">${s.ex.map(e=>`<div class="xr"><span>${esc(e.n)}</span><span class="mut">${e.s} × ${esc(e.r)}</span></div>`).join('')}</div>`;
   else{s.ex.forEach((e,ei)=>{h+=`<div class="exrow"><div class="nm">${e.g&&e.g!=='custom'?`<select class="t" data-swap="${si},${ei}" style="padding:8px;font-size:14px">${optsFor(e.g,e.id)}</select>`:esc(e.n)}</div>
    <input class="mini" type="number" inputmode="numeric" data-ps="${si},${ei}" value="${e.s}"><span class="mut">×</span><input class="mini w" type="text" data-pr="${si},${ei}" value="${esc(e.r)}">
    <button class="del" data-up="${si},${ei}" style="color:var(--gold)">↑</button><button class="del" data-prm="${si},${ei}">✕</button></div>`});
@@ -218,11 +252,11 @@ function plan(){const pl=S.plan||[];
 
 // ---------- Essen ----------
 function fd(){return S.food[dk()]=S.food[dk()]||[]}
+function ringH(v,max,unit){const pc=Math.min(1,v/max),C=2*Math.PI*70;return `<div class="ring"><svg viewBox="0 0 160 160"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8c08a"/><stop offset="1" stop-color="#c9955a"/></linearGradient></defs><circle class="tr" cx="80" cy="80" r="70" fill="none" stroke-width="12"/><circle cx="80" cy="80" r="70" fill="none" stroke-width="12" stroke-linecap="round" stroke="${v>=max?'#7cb5a6':'url(#rg)'}" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C*(1-pc)).toFixed(1)}"/></svg><div class="rc"><b>${v}</b><span>von ${max} ${unit}</span></div></div>`}
 function essen(){const f=fd(),k=f.reduce((a,x)=>a+x.k,0),p=f.reduce((a,x)=>a+x.p,0),t=T(),c=t.c;
  const pk=Math.min(100,k/t.kcal*100),pp=Math.min(100,p/t.prot*100);
  let h=`<h1>Ernährung</h1><div class="sub">Ziel: ${esc(lab(GOALS,S.profile.goal))}</div>
- <div class="card"><div class="row"><span>Kalorien</span><b>${k} / ${t.kcal}</b></div><div class="bar"><i style="width:${pk}%"></i></div>
- <div class="row"><span>Protein</span><b>${p} / ${t.prot} g</b></div><div class="bar"><i style="width:${pp}%"></i></div></div>
+ <div class="card" style="text-align:center">${ringH(k,t.kcal,'kcal')}<div class="row" style="margin-top:12px"><span class="mut">Protein</span><b class="num">${p} / ${t.prot} g</b></div><div class="bar"><i style="width:${pp}%"></i></div></div>
  <h2>Schnell hinzufügen <span class="mut">(ca.-Werte)</span></h2><div class="chips wrap">${PRESETS.map((x,i)=>`<button class="chip" data-pre="${i}">${esc(x[0])}</button>`).join('')}</div>
  <div class="card"><div class="grid2"><input class="t" id="fn" placeholder="Name"><input class="t" id="fk" type="number" inputmode="numeric" placeholder="kcal"></div>
  <div class="grid2" style="margin-top:8px"><input class="t" id="fp" type="number" inputmode="numeric" placeholder="Protein g"><button class="btn" data-act="fadd">Hinzufügen</button></div></div>
@@ -239,12 +273,16 @@ function addFood(n,k,p){if(!n||!(k>=0))return;fd().push({n,k:Math.round(k),p:Mat
 function gewicht(){const w=S.w.slice().sort((a,b)=>a.d.localeCompare(b.d));
  let h=`<h1>Gewicht</h1><div class="sub">1× pro Woche, morgens nach dem Klo</div>
  <div class="card"><div class="grid2"><input class="t" id="wv" type="number" step="0.1" inputmode="decimal" placeholder="kg"><button class="btn" data-act="wadd">Eintragen</button></div></div>`;
- if(w.length){const last=w[w.length-1];h+=`<div class="card"><div class="row"><span>Aktuell</span><b>${last.w.toFixed(1)} kg</b></div><div class="mut">BMI ca. ${(last.w/((S.profile.height/100)**2)).toFixed(1)}</div></div>`;h+=chart(w.slice(-20))+advice(w)}
+ if(w.length){const last=w[w.length-1],dl=last.w-w[0].w;h+=`<div class="card"><div class="big">${last.w.toFixed(1)}<small>kg</small></div><div class="mut">BMI ${(last.w/((S.profile.height/100)**2)).toFixed(1)}${w.length>1?' · '+(dl>0?'+':'')+dl.toFixed(1)+' kg seit dem ersten Eintrag':''}</div></div>`;h+=chart(w.slice(-20))+advice(w)}
  else h+=`<div class="card mut">Trag dein Gewicht ein. Nach etwa 2 Wochen bekommst du eine Empfehlung.</div>`;
  return h+w.slice().reverse().map(x=>`<div class="card row"><span>${x.d}</span><b>${x.w.toFixed(1)} kg</b><button class="del" data-wdel="${x.d}">✕</button></div>`).join('')}
-function chart(w){if(w.length<2)return '';const W=320,H=140,P=24,min=Math.min(...w.map(x=>x.w))-.5,max=Math.max(...w.map(x=>x.w))+.5;
- const pts=w.map((x,i)=>[P+i*(W-2*P)/(w.length-1),H-P-(x.w-min)/(max-min)*(H-2*P)]);
- return `<div class="card"><svg viewBox="0 0 ${W} ${H}" width="100%"><polyline fill="none" stroke="#d4af37" stroke-width="2.5" points="${pts.map(p=>p.join(',')).join(' ')}"/>${pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="#f3d97a"/>`).join('')}<text x="2" y="${H-P}">${min.toFixed(1)}</text><text x="2" y="${P}">${max.toFixed(1)}</text></svg></div>`}
+function chart(w){if(w.length<2)return '';const W=320,H=150,Pl=34,Pr=14,Pt=14,Pb=22,lo=Math.min(...w.map(x=>x.w)),hi=Math.max(...w.map(x=>x.w)),min=lo-.4,max=hi+.4;
+ const X=i=>Pl+i*(W-Pl-Pr)/(w.length-1),Y=v=>Pt+(1-(v-min)/(max-min))*(H-Pt-Pb);
+ const line=w.map((x,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(x.w).toFixed(1)).join('');
+ const area=line+'L'+X(w.length-1).toFixed(1)+' '+(H-Pb)+'L'+X(0).toFixed(1)+' '+(H-Pb)+'Z';
+ const gl=[0,.5,1].map(f=>{const v=min+(max-min)*f,y=Y(v);return `<line x1="${Pl}" x2="${W-Pr}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#2a3037" stroke-width="1"/><text x="${Pl-6}" y="${(y+3).toFixed(1)}" text-anchor="end">${v.toFixed(1)}</text>`}).join('');
+ const lx=X(w.length-1),ly=Y(w[w.length-1].w);
+ return `<div class="card"><svg viewBox="0 0 ${W} ${H}" width="100%"><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9955a" stop-opacity=".35"/><stop offset="1" stop-color="#c9955a" stop-opacity="0"/></linearGradient></defs>${gl}<path d="${area}" fill="url(#ag)"/><path d="${line}" fill="none" stroke="#e8c08a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="9" fill="#c9955a" fill-opacity=".25"/><circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4.5" fill="#e8c08a"/></svg></div>`}
 function advice(w){const last=w[w.length-1],lt=new Date(last.d),ref=w.find(x=>{const d=(lt-new Date(x.d))/864e5;return d>=9&&d<=28});
  if(!ref)return `<div class="card mut">Für eine Empfehlung brauche ich Einträge im Abstand von mindestens 10 Tagen.</div>`;
  const days=(lt-new Date(ref.d))/864e5,rate=(last.w-ref.w)/days*7,bw=last.w,g=calc(S.profile).goal;let m,c='var(--ok)',adj=0;
@@ -302,7 +340,7 @@ document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest
 });
 document.addEventListener('input',e=>{const t=e.target,d=t.dataset||{};
  if('f' in d){D[d.f]=d.f==='name'?t.value:(parseFloat(String(t.value).replace(',','.'))||'');const p=$('#prev');if(p)p.innerHTML=prevHTML()}
- else if(t.classList&&t.classList.contains('si')){const log=(S.log[dk()]=S.log[dk()]||{}),arr=(log[d.id]=log[d.id]||[]);arr[+d.s]=+t.value||0;t.classList.toggle('done',arr[+d.s]>0);save();prog()}
+ else if(t.classList&&t.classList.contains('si')){const log=(S.log[dk()]=S.log[dk()]||{}),arr=(log[d.id]=log[d.id]||[]);arr[+d.s]=+t.value||0;const was=t.classList.contains('done'),on=arr[+d.s]>0;t.classList.toggle('done',on);if(on&&!was){t.classList.remove('pop');void t.offsetWidth;t.classList.add('pop')}save();prog()}
  else if('wt' in d){S.wt[d.wt]=t.value;save()}
  else if('ps' in d){const [a,b]=pair(d.ps);S.plan[a].ex[b].s=Math.max(1,parseInt(t.value)||1);save()}
  else if('pr' in d){const [a,b]=pair(d.pr);S.plan[a].ex[b].r=t.value;save()}
