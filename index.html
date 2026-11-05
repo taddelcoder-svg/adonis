@@ -77,6 +77,11 @@ li{margin:4px 0}
 .xr span:last-child{white-space:nowrap}
 .exrow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:10px 0;padding-bottom:12px;border-bottom:1px solid var(--line)}
 .exrow .nm{flex:1 1 100%;font-size:15px}
+.bar.c>i{background:linear-gradient(90deg,#7cb5a6,#a3d5c8)}
+.bar.f>i{background:linear-gradient(90deg,#9a9385,#cfc7b8)}
+.water{display:flex;gap:5px;margin-top:12px}
+.water button{flex:1;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--p1);padding:0;transition:background .2s}
+.water button.on{background:linear-gradient(180deg,#a3d5c8,#7cb5a6);border-color:transparent}
 .ring{position:relative;width:184px;height:184px;margin:4px auto 6px}
 .ring svg{width:100%;height:100%;transform:rotate(-90deg)}
 .ring .tr{stroke:var(--p3)}
@@ -130,14 +135,14 @@ const LEGS=['Beine + Core','Beine · Waden · Bauch',[['quad',2],['hintere',2],[
 const MIX=['Oberkörper-Mix','Breite · Arme · Bauch',[['rueckenV|rueckenH',1],['brust',1],['schulter',1],['bizeps',1],['trizeps',1],['core',2]]];
 const ARMS=['Arme + Core','Arme · Schultern · Bauch',[['bizeps',2],['trizeps',2],['schulter',1],['core',2]]];
 const TPL={1:[FA],2:[FA,FB],3:[PUSH,PULL,LEGS],4:[PUSH,PULL,LEGS,MIX],5:[PUSH,PULL,LEGS,MIX,ARMS],6:[PUSH,PULL,LEGS,PUSH,PULL,LEGS]};
-const PRESETS=[['Ei',80,6],['Skyr 250 g',160,27],['Milch 250 ml',160,8],['Haferflocken+Banane+Erdnussb.',650,22],['Teller Reis+Hähnchen',750,45],['Teller Nudeln',700,25],['Erdnussbutter 2 EL',190,8],['Quark 250 g',170,30],['Brot (2 Scheiben)+Käse',350,15],['Nüsse 40 g',250,7]];
+const PRESETS=[['Ei',80,6,1,5],['Skyr 250 g',160,27,10,1],['Milch 250 ml',160,8,12,9],['Haferflocken+Banane+Erdnussb.',650,22,85,22],['Teller Reis+Hähnchen',750,45,90,14],['Teller Nudeln',700,25,120,12],['Erdnussbutter 2 EL',190,8,6,16],['Quark 250 g',170,30,10,1],['Brot (2 Scheiben)+Käse',350,15,38,14],['Nüsse 40 g',250,7,5,22]];
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const dk=()=>new Date().toLocaleDateString('sv');
 const lab=(arr,v)=>(arr.find(x=>String(x[0])===String(v))||[0,'?'])[1];
 let S;try{S=JSON.parse(localStorage.getItem('adonis2'))}catch(e){}
-S=Object.assign({profile:null,plan:null,planCfg:'',log:{},w:[],food:{},manual:null,wt:{}},S||{});
+S=Object.assign({profile:null,plan:null,planCfg:'',log:{},w:[],food:{},manual:null,wt:{},water:{}},S||{});
 const save=()=>{try{localStorage.setItem('adonis2',JSON.stringify(S))}catch(e){}};
 let tab='heute',D=null,editing=false,pedit=false,sel=0;
 const today=new Date().getDay();
@@ -171,7 +176,7 @@ function calc(P){
  kcal=Math.round(kcal/50)*50;
  const prot=Math.round(w*(goal==='aufbau'?2:goal==='abnehmen'?2:1.6)/5)*5,fat=Math.round(kcal*.25/9),carb=Math.max(0,Math.round((kcal-prot*4-fat*9)/4));
  return {bmr,tdee,bmi,goal,kcal,prot,fat,carb,warn}}
-function T(){const c=calc(S.profile);return {c,kcal:S.manual?S.manual.kcal:c.kcal,prot:S.manual?S.manual.prot:c.prot}}
+function T(){const c=calc(S.profile),kcal=S.manual?S.manual.kcal:c.kcal,prot=S.manual?S.manual.prot:c.prot,fat=Math.round(kcal*.25/9),carb=Math.max(0,Math.round((kcal-prot*4-fat*9)/4));return {c,kcal,prot,fat,carb}}
 
 // ---------- Navigation / Render ----------
 const TABS=[['heute','🏋️','Heute'],['plan','📋','Plan'],['essen','🍽️','Essen'],['gewicht','📈','Gewicht'],['ich','👤','Ich']];
@@ -253,21 +258,26 @@ function plan(){const pl=S.plan||[];
 // ---------- Essen ----------
 function fd(){return S.food[dk()]=S.food[dk()]||[]}
 function ringH(v,max,unit){const pc=Math.min(1,v/max),C=2*Math.PI*70;return `<div class="ring"><svg viewBox="0 0 160 160"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8c08a"/><stop offset="1" stop-color="#c9955a"/></linearGradient></defs><circle class="tr" cx="80" cy="80" r="70" fill="none" stroke-width="12"/><circle cx="80" cy="80" r="70" fill="none" stroke-width="12" stroke-linecap="round" stroke="${v>=max?'#7cb5a6':'url(#rg)'}" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C*(1-pc)).toFixed(1)}"/></svg><div class="rc"><b>${v}</b><span>von ${max} ${unit}</span></div></div>`}
-function essen(){const f=fd(),k=f.reduce((a,x)=>a+x.k,0),p=f.reduce((a,x)=>a+x.p,0),t=T(),c=t.c;
- const pk=Math.min(100,k/t.kcal*100),pp=Math.min(100,p/t.prot*100);
+const macroH=(l,v,max,cls)=>`<div class="row" style="margin-top:12px"><span class="mut">${l}</span><b class="num">${v} / ${max} g</b></div><div class="bar ${cls}"><i style="width:${max>0?Math.min(100,v/max*100):0}%"></i></div>`;
+const waterT=()=>Math.max(8,Math.round(+S.profile.weight*35/250));
+const lit=x=>x.toFixed(2).replace(/0$/,'').replace('.',',');
+function waterH(){const n=waterT(),v=S.water[dk()]||0;let b='';for(let i=1;i<=n;i++)b+=`<button class="${i<=v?'on':''}" data-wat="${i}" aria-label="${i} Gläser"></button>`;
+ return `<div class="card"><div class="row"><span class="mut">Wasser (1 Glas = 250 ml)</span><b class="num">${lit(v*.25)} / ${lit(n*.25)} L</b></div><div class="water">${b}</div></div>`}
+function essen(){const f=fd(),k=f.reduce((a,x)=>a+x.k,0),p=f.reduce((a,x)=>a+x.p,0),cb=f.reduce((a,x)=>a+(x.c||0),0),fa=f.reduce((a,x)=>a+(x.f||0),0),t=T(),c=t.c;
  let h=`<h1>Ernährung</h1><div class="sub">Ziel: ${esc(lab(GOALS,S.profile.goal))}</div>
- <div class="card" style="text-align:center">${ringH(k,t.kcal,'kcal')}<div class="row" style="margin-top:12px"><span class="mut">Protein</span><b class="num">${p} / ${t.prot} g</b></div><div class="bar"><i style="width:${pp}%"></i></div></div>
+ <div class="card" style="text-align:center">${ringH(k,t.kcal,'kcal')}${macroH('Protein',p,t.prot,'')}${macroH('Kohlenhydrate',cb,t.carb,'c')}${macroH('Fett',fa,t.fat,'f')}</div>${waterH()}
  <h2>Schnell hinzufügen <span class="mut">(ca.-Werte)</span></h2><div class="chips wrap">${PRESETS.map((x,i)=>`<button class="chip" data-pre="${i}">${esc(x[0])}</button>`).join('')}</div>
  <div class="card"><div class="grid2"><input class="t" id="fn" placeholder="Name"><input class="t" id="fk" type="number" inputmode="numeric" placeholder="kcal"></div>
- <div class="grid2" style="margin-top:8px"><input class="t" id="fp" type="number" inputmode="numeric" placeholder="Protein g"><button class="btn" data-act="fadd">Hinzufügen</button></div></div>
+ <div class="grid2" style="margin-top:8px"><input class="t" id="fp" type="number" inputmode="numeric" placeholder="Protein g"><input class="t" id="fc" type="number" inputmode="numeric" placeholder="Kohlenhydrate g"></div>
+ <div class="grid2" style="margin-top:8px"><input class="t" id="ff" type="number" inputmode="numeric" placeholder="Fett g"><button class="btn" data-act="fadd">Hinzufügen</button></div></div>
  <h2>Heute gegessen</h2>`;
- h+=f.length?f.map((x,i)=>`<div class="card row"><div>${esc(x.n)}<div class="mut">${x.k} kcal · ${x.p} g Protein</div></div><button class="del" data-del="${i}">✕</button></div>`).join(''):`<div class="mut">Noch nichts eingetragen.</div>`;
+ h+=f.length?f.map((x,i)=>`<div class="card row"><div>${esc(x.n)}<div class="mut">${x.k} kcal · ${x.p} g Protein · ${x.c||0} g KH · ${x.f||0} g Fett</div></div><button class="del" data-del="${i}">✕</button></div>`).join(''):`<div class="mut">Noch nichts eingetragen.</div>`;
  h+=`<h2>Deine Ziele</h2><div class="card"><div class="grid2"><div><div class="mut">kcal/Tag</div><input class="t" id="tk" type="number" inputmode="numeric" value="${t.kcal}"></div><div><div class="mut">Protein g</div><input class="t" id="tp" type="number" inputmode="numeric" value="${t.prot}"></div></div>
  <div class="mut" style="margin-top:8px">Automatisch berechnet: ${c.kcal} kcal, ${c.prot} g Protein, ca. ${c.fat} g Fett, ca. ${c.carb} g Kohlenhydrate. Grundumsatz ${Math.round(c.bmr)}, Gesamtumsatz ${Math.round(c.tdee)} kcal.</div>
  ${S.manual?'<button class="btn sec sm" data-act="auto" style="margin-top:8px">Auf automatisch zurücksetzen</button>':''}
  ${c.warn.map(x=>`<div class="banner">${esc(x)}</div>`).join('')}</div>
  <h2>Gute Lebensmittel</h2><div class="card mut">Haferflocken, Eier, Skyr/Quark, Milch, Reis, Nudeln, Kartoffeln, Hähnchen, Thunfisch, Linsen, Nüsse, Olivenöl, Obst und Gemüse. Verteile das Essen auf 3 Mahlzeiten und 1-2 Snacks.</div>`;return h}
-function addFood(n,k,p){if(!n||!(k>=0))return;fd().push({n,k:Math.round(k),p:Math.round(p||0)});save();render(1)}
+function addFood(n,k,p,c,f){if(!n||!(k>=0))return;fd().push({n,k:Math.round(k),p:Math.round(p||0),c:Math.round(c||0),f:Math.round(f||0)});save();render(1)}
 
 // ---------- Gewicht ----------
 function gewicht(){const w=S.w.slice().sort((a,b)=>a.d.localeCompare(b.d));
@@ -320,10 +330,11 @@ document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest
  else if('eq' in d){const i=D.eq.indexOf(d.eq);if(i>=0)D.eq.splice(i,1);else D.eq.push(d.eq);render(1)}
  else if('sess' in d){sel=+d.sess;render()}
  else if(d.t)startT(+d.t);
- else if('pre' in d){const x=PRESETS[+d.pre];addFood(x[0],x[1],x[2])}
+ else if('pre' in d){const x=PRESETS[+d.pre];addFood(x[0],x[1],x[2],x[3],x[4])}
  else if('del' in d){fd().splice(+d.del,1);save();render(1)}
  else if('wdel' in d){S.w=S.w.filter(x=>x.d!==d.wdel);save();render(1)}
  else if('adj' in d){const c=T();S.manual={kcal:c.kcal+(+d.adj),prot:c.prot};save();alert('Neues Kalorienziel: '+S.manual.kcal+' kcal');render(1)}
+ else if('wat' in d){const n=+d.wat,cur=S.water[dk()]||0;S.water[dk()]=n===cur?n-1:n;save();render(1)}
  else if('up' in d){const [si,ei]=pair(d.up),x=S.plan[si].ex;if(ei>0&&x[ei]){[x[ei-1],x[ei]]=[x[ei],x[ei-1]];save();render(1)}}
  else if('prm' in d){const [si,ei]=pair(d.prm);S.plan[si].ex.splice(ei,1);save();render(1)}
  else if(a==='savep')saveProfile();
@@ -332,7 +343,7 @@ document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest
  else if(a==='pedit'){pedit=!pedit;render(1)}
  else if(a==='regen'){if(confirm('Neuen Plan aus deinem Profil erzeugen? Eigene Änderungen gehen verloren.')){S.plan=genPlan(S.profile);save();sel=initSel();render()}}
  else if(a==='auto'){S.manual=null;save();render(1)}
- else if(a==='fadd')addFood($('#fn').value.trim(),+$('#fk').value,+$('#fp').value);
+ else if(a==='fadd')addFood($('#fn').value.trim(),+$('#fk').value,+$('#fp').value,+$('#fc').value,+$('#ff').value);
  else if(a==='wadd'){const v=parseFloat($('#wv').value.replace(',','.'));if(v>20&&v<250){S.w=S.w.filter(x=>x.d!==dk());S.w.push({d:dk(),w:v});S.profile.weight=v;save();render(1)}}
  else if(a==='exp'){const s=JSON.stringify(S);(navigator.clipboard?navigator.clipboard.writeText(s):Promise.reject()).then(()=>alert('Backup kopiert.')).catch(()=>prompt('Backup kopieren:',s))}
  else if(a==='imp'){const s=prompt('Backup einfügen:');if(s){try{S=Object.assign(S,JSON.parse(s));save();sel=initSel();render();alert('Fertig.')}catch(x){alert('Ungültig.')}}}
